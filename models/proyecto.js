@@ -20,10 +20,6 @@ const ProyectoSchema = new Schema({
     type: String,
     requires: true
   },
-  lotes: {
-    type: Array,
-    required: false
-  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'owner'

@@ -13,7 +13,7 @@ const app = express()
 app.use('/graphql', graphqlHttp({
     schema:graphqlSchema,
     rootValue:graphqlResolvers,
-    graphiql: true
+    graphiql: true,
 }))
 
 const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@gti.tcrun.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`

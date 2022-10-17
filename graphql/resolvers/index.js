@@ -1,4 +1,4 @@
-const { Article, Owner } = require('../../models')
+const { Article, Owner, Proyecto } = require('../../models')
 
 module.exports = {
 
@@ -61,6 +61,48 @@ module.exports = {
             })
             const newOwner = await owner.save()
             return { ...newOwner._doc, _id: newOwner.id }
+        }
+        catch (error) {
+            throw error
+        }
+    },
+    getOwnersBySlug: async args => {
+        try {
+            const { slug } = args
+            const owner = await Owner.findOne({ slug })
+            return { ...owner._doc, _id: owner.id }
+        }
+        catch (error) {
+            throw error
+        }
+    },
+    createProyecto: async args => {
+        try {
+            const { isActive, address, title, img, owner } = args.proyecto
+            const proyecto = new Proyecto({
+                isActive,
+                address,
+                title,
+                img,
+                owner
+            })
+            const newProyecto = await proyecto.save()
+            return { ...newProyecto._doc, _id: newProyecto.id }
+        }
+        catch (error) {
+            throw error
+        }
+    },
+    getProyectosByOwner: async args => {
+        try {
+            const { owner } = args
+            const proyectos = await Proyecto.find({ owner })
+            return proyectos.map(proyecto => {
+                return {
+                    ...proyecto._doc,
+                    _id: proyecto.id
+                }
+            })
         }
         catch (error) {
             throw error
