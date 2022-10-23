@@ -1,11 +1,10 @@
-const moongose = require('mongoose');
-const { Schema } = moongose;
+import mongoose from 'mongoose'
+const { Schema } = mongoose
 
-const OwnerSchema = new Schema({
+export const OwnerSchema = new Schema({
   isActive: {
     type: Boolean,
-    default: true,
-    required: false
+    default: true
   },
   name: {
     type: String,
@@ -13,21 +12,18 @@ const OwnerSchema = new Schema({
   },
   slug: {
     type: String,
-    required: true,
+    required: true
   },
   rfc: {
     type: String,
-    required: true,
+    required: true
   },
   razonSocial: {
     type: String,
-    required: true,
+    required: true
   }
-}, { timestamps: true });
+}, { timestamps: true })
 
+const Owner = mongoose.model('Owner', OwnerSchema)
 
-const Owner = moongose.model('Owner', OwnerSchema);
-
-module.exports = {
-  Owner
-}
+export default Owner

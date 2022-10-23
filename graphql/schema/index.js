@@ -1,22 +1,22 @@
-const { buildSchema } = require('graphql')
+// A schema is a collection of type definitions (hence "typeDefs")
+// that together define the "shape" of queries that are executed against
+// your data.
+export const typeDefs = `#graphql
+  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
-
-module.exports = buildSchema(`
-  type Article {
-    _id: ID!
-    title: String!
-    body: String!
-    createdAt: String!
+  # This "Book" type defines the queryable fields for every book in our data source.
+  type Book {
+    title: String
+    author: String
   }
 
-  input ArticleInput {
-    title: String!
-    body: String!
-  }
-  
+  # The "Query" type is special: it lists all of the available queries that
+  # clients can execute, along with the return type for each. In this
+  # case, the "books" query returns an array of zero or more Books (defined above).
+    
   type Owner {
     _id: ID!
-    isActive: Boolean!
+    isActive: Boolean
     name: String!
     slug: String!
     rfc: String!
@@ -25,7 +25,7 @@ module.exports = buildSchema(`
 
   type Proyecto {
     _id: ID!
-    isActive: Boolean!
+    isActive: Boolean
     address: String!
     title: String!
     img: String
@@ -33,7 +33,7 @@ module.exports = buildSchema(`
   }
 
   input ProyectoInput {
-    isActive: Boolean!
+    isActive: Boolean
     address: String!
     title: String!
     img: String
@@ -41,28 +41,41 @@ module.exports = buildSchema(`
   }
       
   input OwnerInput {
-    isActive: Boolean!
+    isActive: Boolean
     name: String!
     slug: String!
     rfc: String!
     razonSocial: String!
   }
+
+  input ClientInput {
+    isActive: Boolean
+    name: String!
+    phone: String!
+    address: String!
+    email: String!      
+  }
+
+  type Client {
+    _id: ID!
+    isActive: Boolean
+    name: String!
+    phone: String!
+    address: String!
+    email: String!
+    
+  }
   
   type Query {
-    articles:[Article!]
     owners: [Owner!]
     getOwnersBySlug(slug: String!): Owner!
     getProyectosByOwner(owner: ID!): [Proyecto!]
   }
 
   type Mutation {
-    createArticle(article:ArticleInput): Article
     createOwner(owner:OwnerInput): Owner
     createProyecto(proyecto:ProyectoInput): Proyecto
+    createClient(client:ClientInput): Client
   }
-
-  schema {
-    query: Query
-    mutation: Mutation
-  }
-`)
+  
+`

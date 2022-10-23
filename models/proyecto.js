@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 const ProyectoSchema = new Schema({
@@ -21,14 +21,12 @@ const ProyectoSchema = new Schema({
     requires: true
   },
   owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'owner'
+    type: Schema.Types.ObjectId,
+    ref: 'Owner'
   }
 
 }, { timestamps: true })
 
 const Proyecto = mongoose.model('Proyecto', ProyectoSchema)
 
-module.exports = {
-  Proyecto
-}
+export default Proyecto

@@ -1,9 +1,11 @@
-const { Owner } = require('./owner')
-const { Article } = require('./article')
-const { Proyecto } = require('./proyecto')
+import Proyecto from './proyecto.js'
+import Owner from './owner.js'
+import Lotes from './lotes.js'
+import Clientes from './clientes.js'
 
-module.exports = {
+export {
+  Proyecto,
   Owner,
-  Article,
-  Proyecto
+  Lotes,
+  Clientes
 }

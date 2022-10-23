@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
+
 const { Schema } = mongoose
 
 // def: cada lote solo tiene un cliente y solo puedo pertenecer a un proyecto
@@ -50,7 +51,7 @@ const LotesSchema = new Schema({
     type: Date,
     required: false
   },
-  // aqui se guardara la cantidad de pagos que tiene 
+  // aqui se guardara la cantidad de pagos que tiene
   total_pagos: {
     type: Number,
     require: false
@@ -60,6 +61,4 @@ const LotesSchema = new Schema({
 
 const Lotes = mongoose.model('Lotes', LotesSchema)
 
-module.exports = {
-  Lotes
-}
+export default Lotes

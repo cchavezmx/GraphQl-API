@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 /**
@@ -8,7 +8,7 @@ const { Schema } = mongoose
 * @params acreditado string de pago acreditado
 */
 
-const PagosSchema = new Schema({
+export const PagosSchema = new Schema({
   isActive: {
     type: Boolean,
     default: true,
@@ -43,7 +43,7 @@ const PagosSchema = new Schema({
     require: false
   },
   deposito: {
-    type: Float,
+    type: mongoose.Decimal128,
     require: true
   },
   ctaBancaria: {
@@ -70,22 +70,17 @@ const PagosSchema = new Schema({
 
 }, { timestamps: true })
 
-
 PagosSchema.pre('save', async function (next) {
-
   this.folio = await Pagos.find({
     cliente: this.cliente,
     proyecto: this.proyecto,
     lote: this.lote,
     owner: this.owner
   }).countDocuments() + 1
-  
-  next()
 
+  next()
 })
 
 const Pagos = mongoose.model('Pagos', PagosSchema)
 
-module.exports = {
-  Pagos
-}
+export default Pagos
