@@ -11,7 +11,7 @@ jobs:
           node-version: '16'
       - run: npm install
       - run: npx playwright install-deps
-      - run: apt-get install libnss3
+      - run: sudo apt-get install libnss3
                
       - name: Install Railway
         run: npm i -g @railway/cli
