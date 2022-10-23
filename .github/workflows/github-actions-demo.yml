@@ -9,7 +9,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
-      - run: npx playwright install-deps
+      - run: npx playwright install-with-deps
       - run: npm install
                
       - name: Install Railway
