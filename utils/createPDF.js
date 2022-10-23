@@ -6,7 +6,7 @@ const createPDF = async (html, options) => {
   await page.setContent('<h1>Hello World</h1>')
 
   const pdf = await page.pdf({
-    format: 'A4',
+    format: 'Letter',
     printBackground: true,
     margin: {
       left: 0,
