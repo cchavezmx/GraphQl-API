@@ -1,6 +1,7 @@
 import { chromium } from 'playwright'
 
 const createPDF = async (html, options) => {
+  chromium.launch({ headless: false })
   const browser = await chromium.launch()
   const page = await browser.newPage()
   await page.setContent('<h1>Hello World</h1>')

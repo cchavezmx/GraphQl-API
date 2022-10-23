@@ -2,7 +2,7 @@
 
 const config = {
   use: {
-    headless: true
+    headless: false
   }
 }
 
