@@ -63,7 +63,6 @@ export const typeDefs = `#graphql
     phone: String!
     address: String!
     email: String!
-    
   }
   
   type Query {
@@ -76,6 +75,7 @@ export const typeDefs = `#graphql
     createOwner(owner:OwnerInput): Owner
     createProyecto(proyecto:ProyectoInput): Proyecto
     createClient(client:ClientInput): Client
+    createPDF(pago: ID!): String
   }
   
 `

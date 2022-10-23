@@ -1,5 +1,6 @@
 import { ApolloError } from 'apollo-server-core'
 import { Proyecto, Clientes, Owner } from '../../models/index.js'
+import createPDF from '../../utils/createPDF.js'
 
 export const Mutation = {
   createClient: async args => {
@@ -46,6 +47,14 @@ export const Mutation = {
       return { ...newOwner._doc, _id: newOwner.id }
     } catch (error) {
       return ApolloError(error)
+    }
+  },
+  createPDF: async args => {
+    try {
+      const res = await createPDF()
+      return res
+    } catch (error) {
+      return new ApolloError(error)
     }
   }
 }
