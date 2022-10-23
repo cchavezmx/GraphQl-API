@@ -9,8 +9,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '16'      
-      - run: npx playwright install-deps chromium
       - run: npm install
+      - run: npx playwright install-deps chromium
       - name: Install Railway
         run: npm i -g @railway/cli
 
