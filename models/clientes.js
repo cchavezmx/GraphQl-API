@@ -6,7 +6,7 @@ const ClientesSchema = new Schema({
     type: Boolean,
     default: true
   },
-  nombre: {
+  name: {
     type: String
   },
   phone: {
@@ -22,6 +22,6 @@ const ClientesSchema = new Schema({
 
 }, { timestamps: true })
 
-const Clientes = mongoose.model('Clientes', ClientesSchema)
+const Clientes = mongoose.model('Cliente', ClientesSchema)
 
 export default Clientes

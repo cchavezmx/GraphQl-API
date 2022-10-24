@@ -1,4 +1,5 @@
-import { Owner, Proyecto } from '../../models/index.js'
+import { ApolloError } from 'apollo-server-core'
+import { Owner, Proyecto, Clientes, Lotes } from '../../models/index.js'
 
 export const Query = {
 
@@ -16,19 +17,16 @@ export const Query = {
 
     }
   },
-  getOwnersBySlug: async args => {
+  getOwnersBySlug: async (_, { slug }, context, info) => {
     try {
-      const { slug } = args
       const owner = await Owner.findOne({ slug })
       return { ...owner._doc, _id: owner.id }
     } catch (error) {
-
+      return new ApolloError(error)
     }
   },
-
-  getProyectosByOwner: async args => {
+  getProyectosByOwner: async (_, { owner }, context, info) => {
     try {
-      const { owner } = args
       const proyectos = await Proyecto.find({ owner }).populate('owner')
       const respose = proyectos.map(proyecto => {
         return {
@@ -38,7 +36,36 @@ export const Query = {
       })
       return respose
     } catch (error) {
-      console.log('🚀 ~ file: index.js ~ line 110 ~ error', error)
+      return new ApolloError(error)
+    }
+  },
+  getAllClients: async () => {
+    try {
+      const clients = await Clientes.find()
+      return clients.map(client => {
+        return {
+          ...client._doc,
+          _id: client.id
+        }
+      })
+    } catch (error) {
+      return new ApolloError(error)
+    }
+  },
+  getLotesByProject: async (_, { proyecto }, context, info) => {
+    try {
+      const client = await Lotes.find({ proyecto }).populate('cliente')
+      const response = client.map(lote => {
+        if (!lote.cliente) (console.log('🚀 ~ file: query.js ~ line 59 ~ response ~ lote', lote))
+        return {
+          ...lote._doc,
+          _id: lote.id,
+          clienteData: lote.cliente
+        }
+      })
+      return response
+    } catch (error) {
+      return new ApolloError(error)
     }
   }
 
