@@ -14,11 +14,6 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Deploy
-        run: railway up
+        run: railway up 
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-      - name: Run Project
-        run: npx playwright install-deps chromium && npm run start
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-    

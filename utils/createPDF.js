@@ -1,6 +1,8 @@
 import { chromium } from 'playwright'
+import { setTimeout } from 'timers/promises'
 
 const createPDF = async (html, options) => {
+  await setTimeout(1000)
   const browser = await chromium.launch({ headless: true })
   const page = await browser.newPage()
   await page.setContent('<h1>Hello World</h1>')
