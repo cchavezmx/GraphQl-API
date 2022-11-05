@@ -1,5 +1,6 @@
 import { ApolloError } from 'apollo-server-core'
-import { Owner, Proyecto, Clientes, Lotes } from '../../models/index.js'
+import { Owner, Proyecto, Clientes, Lotes, Pagos } from '../../models/index.js'
+import { ObjectId } from 'mongodb'
 
 export const Query = {
 
@@ -56,14 +57,94 @@ export const Query = {
     try {
       const client = await Lotes.find({ proyecto }).populate('cliente')
       const response = client.map(lote => {
+        console.log('🚀 ~ file: query.js ~ line 60 ~ response ~ lote', lote)
+
         if (!lote.cliente) (console.log('🚀 ~ file: query.js ~ line 59 ~ response ~ lote', lote))
         return {
           ...lote._doc,
           _id: lote.id,
-          clienteData: lote.cliente
+          clienteData: { name: lote.cliente.name, _id: lote.cliente._id }
         }
       })
       return response
+    } catch (error) {
+      return new ApolloError(error)
+    }
+  },
+  getAllPagosFromLote: async (_, { lote, proyecto, cliente }, context, info) => {
+    const agg = [
+      {
+        $match: {
+          lote: new ObjectId(lote)
+        }
+      },
+      {
+        $match: {
+          proyecto: new ObjectId(proyecto)
+        }
+      },
+      {
+        $match: {
+          cliente: new ObjectId(cliente)
+        }
+      },
+      {
+        $lookup: {
+          from: 'clientes',
+          localField: 'cliente',
+          foreignField: '_id',
+          as: 'clienteData'
+        }
+      },
+      {
+        $unwind: '$clienteData'
+      },
+      {
+        $lookup: {
+          from: 'proyectos',
+          localField: 'proyecto',
+          foreignField: '_id',
+          as: 'proyectoData'
+        }
+      },
+      {
+        $unwind: '$proyectoData'
+      },
+      {
+        $lookup: {
+          from: 'lotes',
+          localField: 'lote',
+          foreignField: '_id',
+          as: 'loteData'
+        }
+      },
+      {
+        $unwind: '$loteData'
+      },
+      {
+        $lookup: {
+          from: 'owners',
+          localField: 'proyectoData.owner',
+          foreignField: '_id',
+          as: 'ownerData'
+        }
+      },
+      {
+        $unwind: '$ownerData'
+      }
+
+    ]
+
+    try {
+      const loteFound = await Pagos.aggregate(agg)
+      const pagos = loteFound.map(pago => {
+        return {
+          ...pago,
+          deposito: pago.deposito ?? pago.mensualidad.toString()
+        }
+      })
+      console.log('🚀 ~ file: query.js ~ line 83 ~ getAllPagosFromLote: ~ loteFound', pagos)
+      return pagos
     } catch (error) {
       return new ApolloError(error)
     }

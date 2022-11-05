@@ -26,7 +26,8 @@
     "mongoose": "^6.6.7",
     "nodemon": "^2.0.20",
     "playwright": "^1.27.1",
-    "standard": "^17.0.0"
+    "standard": "^17.0.0",
+    "uuidv4": "^6.2.13"
   },
   "eslintConfig": {
     "extends": "standard"

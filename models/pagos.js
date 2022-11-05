@@ -1,4 +1,6 @@
 import mongoose from 'mongoose'
+import { uuid } from 'uuidv4'
+
 const { Schema } = mongoose
 
 /**
@@ -6,6 +8,7 @@ const { Schema } = mongoose
 * @params normal string de pago mensualidad
 * @params extra string de pago extra
 * @params acreditado string de pago acreditado
+* @params saldoinicial string de pago de saldo inicial
 */
 
 export const PagosSchema = new Schema({
@@ -20,21 +23,26 @@ export const PagosSchema = new Schema({
   },
   cliente: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'cliente'
+    ref: 'Cliente'
   },
   proyecto: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'proyecto'
+    ref: 'Proyecto'
   },
   lote: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'lote'
+    ref: 'Lotes'
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'owner'
+    ref: 'Owner'
   },
+  // folio es el numero de pago
   folio: {
+    type: String
+  },
+  // folio interno para control de pagos
+  consecutivo: {
     type: Number,
     required: true
   },
@@ -56,7 +64,7 @@ export const PagosSchema = new Schema({
   },
   tipoPago: {
     type: String,
-    enum: ['normal', 'extra', 'acreditado'],
+    enum: ['mensualidad', 'extra', 'acreditado', 'saldoinicial'],
     required: true
   },
   fechaPago: {
@@ -74,9 +82,12 @@ PagosSchema.pre('save', async function (next) {
   this.folio = await Pagos.find({
     cliente: this.cliente,
     proyecto: this.proyecto,
-    lote: this.lote,
-    owner: this.owner
+    lote: this.lote
   }).countDocuments() + 1
+
+  const lastUUD = uuid().split('-')
+  const lastSerie = lastUUD[4]
+  this.consecutivo = lastSerie
 
   next()
 })

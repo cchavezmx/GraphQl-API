@@ -93,6 +93,25 @@ export const typeDefs = `#graphql
     email: String!
   }
 
+  type Pago {
+    _id: ID!
+    isActive: Boolean
+    status: Boolean
+    folio: String!
+    consecutivo: Int
+    refPago: String!
+    deposito: String
+    ctaBancaria: String
+    banco: String
+    tipoPago: String
+    fechaPago: String
+    refBanco: String
+    clienteData: Client!
+    proyectoData: Proyecto!
+    loteData: Lote!
+    ownerData: Owner!
+  }
+
 
   type Lote {
     _id: ID!
@@ -114,6 +133,7 @@ export const typeDefs = `#graphql
     getProyectosByOwner(owner: ID!): [Proyecto!]
     getAllClients: [Client!]
     getLotesByProject(proyecto: ID!): [Lote!]
+    getAllPagosFromLote(lote: ID!, proyecto: ID!, cliente: ID!): [Pago!]
   }
 
   type Mutation {

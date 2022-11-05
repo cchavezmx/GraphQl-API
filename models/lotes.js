@@ -19,36 +19,31 @@ const LotesSchema = new Schema({
   },
   lote: {
     type: String,
-    required: true,
     unique: true
   },
   manzana: {
-    type: String,
-    required: false
+    type: String
+  },
+  francionamiento: {
+    type: String
   },
   precioTotal: {
-    type: Number,
-    require: true
+    type: Number
   },
   enganche: {
-    type: Number,
-    required: false
+    type: Number
   },
   financiamiento: {
-    type: Number,
-    required: false
+    type: Number
   },
   plazo: {
-    type: Number,
-    required: true
+    type: Number
   },
   mensualidad: {
-    type: Number,
-    required: false
+    type: Number
   },
   inicioContrato: {
-    type: Date,
-    required: false
+    type: Date
   }
 
 })
