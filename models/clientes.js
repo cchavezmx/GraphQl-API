@@ -15,11 +15,14 @@ const ClientesSchema = new Schema({
   address: {
     type: String
   },
+  identifier: {
+    type: String,
+    unique: true
+  },
   email: {
     type: String,
     unique: true
   }
-
 }, { timestamps: true })
 
 const Clientes = mongoose.model('Cliente', ClientesSchema)

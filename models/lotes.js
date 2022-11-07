@@ -24,7 +24,7 @@ const LotesSchema = new Schema({
   manzana: {
     type: String
   },
-  francionamiento: {
+  fraccionamiento: {
     type: String
   },
   precioTotal: {

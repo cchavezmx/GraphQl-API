@@ -51,13 +51,37 @@ export const Mutation = {
       return new ApolloError(error)
     }
   },
-  createLote: async (_, { lote }, context, info) => {
+  createLote: async (_, { lote, newClientUpsert }, context, info) => {
+    const { name, email, cliente, ...restOfData } = lote
+
     try {
-      const newLote = new Lotes({ ...lote })
-      const newLoteCreated = await newLote.save()
-      return { ...newLoteCreated._doc, _id: newLoteCreated.id }
+      const contactIsNew = await Clientes.findOne({ email })
+
+      if (newClientUpsert && !contactIsNew) {
+        const newClient = new Clientes({ name, email })
+        const client = await newClient.save()
+        // creamos el nuevo lote con el id del cliente generado en la linea 59
+        const newLote = new Lotes({ ...restOfData, cliente: client._id })
+        const newLoteCreated = await newLote.save()
+        return { ...newLoteCreated._doc, _id: newLoteCreated.id }
+      }
+
+      if (!newClientUpsert) {
+        // verificamos si el lote existe
+        const newLote = new Lotes({ ...lote })
+        const newLoteCreated = await newLote.save()
+        return { ...newLoteCreated._doc, _id: newLoteCreated.id }
+      }
+
+      if (newClientUpsert && contactIsNew) {
+        return new ApolloError('El cliente ya existe')
+      }
+
+      const error = new ApolloError('no se especifico si el cliente es nuevo o no')
+      return error
     } catch (error) {
       return new ApolloError(error)
     }
   }
+
 }

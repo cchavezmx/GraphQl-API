@@ -1,6 +1,7 @@
 import { ApolloError } from 'apollo-server-core'
 import { Owner, Proyecto, Clientes, Lotes, Pagos } from '../../models/index.js'
 import { ObjectId } from 'mongodb'
+import mongoose from 'mongoose'
 
 export const Query = {
 
@@ -54,11 +55,10 @@ export const Query = {
     }
   },
   getLotesByProject: async (_, { proyecto }, context, info) => {
+    const objectId = mongoose.Types.ObjectId(proyecto)
     try {
-      const client = await Lotes.find({ proyecto }).populate('cliente')
-      const response = client.map(lote => {
-        console.log('🚀 ~ file: query.js ~ line 60 ~ response ~ lote', lote)
-
+      const client = await Lotes.find({ proyecto: objectId }).populate('cliente')
+      const response = client.reverse().map(lote => {
         if (!lote.cliente) (console.log('🚀 ~ file: query.js ~ line 59 ~ response ~ lote', lote))
         return {
           ...lote._doc,
@@ -148,6 +148,57 @@ export const Query = {
     } catch (error) {
       return new ApolloError(error)
     }
-  }
+  },
+  watchLoteInfo: async (_, { lote, manzana, fraccionamiento, proyectoId }, context, info) => {
+    const agg = [
+      {
+        $match: {
+          lote
+        }
+      }, {
+        $match: {
+          manzana
+        }
+      }, {
+        $match: {
+          fraccionamiento
+        }
+      }, {
+        $lookup: {
+          from: 'proyectos',
+          localField: 'proyecto',
+          foreignField: '_id',
+          as: 'proyectoData'
+        }
+      }, {
+        $unwind: {
+          path: '$proyectoData'
+        }
+      }, {
+        $lookup: {
+          from: 'clientes',
+          localField: 'cliente',
+          foreignField: '_id',
+          as: 'clienteData'
+        }
+      }, {
+        $unwind: {
+          path: '$clienteData'
+        }
+      }, {
+        $match: {
+          proyecto: new ObjectId(proyectoId)
+        }
+      }
+    ]
 
+    const match = await Lotes.aggregate(agg)
+    return match.map(item => {
+      console.log('🚀 ~ file: query.js ~ line 171 ~ watchLoteInfo: ~ item', item)
+      return {
+        ...item,
+        _id: item._id.toString()
+      }
+    })
+  }
 }

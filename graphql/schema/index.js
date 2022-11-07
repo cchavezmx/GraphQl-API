@@ -34,7 +34,7 @@ export const typeDefs = `#graphql
 
   input ProyectoInput {
     isActive: Boolean
-    address: String!
+    address: String
     title: String!
     img: String
     owner: ID!
@@ -59,9 +59,12 @@ export const typeDefs = `#graphql
   input LoteInput {
     isActive: Boolean
     proyecto: ID!
-    cliente: ID!
+    cliente: ID
+    name: String
+    email: String
     lote: String!
     manzana: String!
+    fraccionamiento: String
     precioTotal: Float!
     enganche: Float!
     financiamiento: Float!
@@ -87,10 +90,10 @@ export const typeDefs = `#graphql
   type Client {
     _id: ID!
     isActive: Boolean
-    name: String!
-    phone: String!
-    address: String!
-    email: String!
+    name: String
+    phone: String
+    address: String
+    email: String
   }
 
   type Pago {
@@ -116,16 +119,20 @@ export const typeDefs = `#graphql
   type Lote {
     _id: ID!
     isActive: Boolean    
-    manzana: String!
-    lote: String!
+    manzana: String
+    lote: String
+    fraccionamiento: String
     precioTotal: Float!
     enganche: Float!
     financiamiento: Float!
     plazo: Float!
     mensualidad: Float!
     inicioContrato: String!
-    clienteData: Client! 
+    clienteData: Client
+    proyectoData: Proyecto
   }
+
+  
   
   type Query {
     owners: [Owner!]
@@ -134,6 +141,7 @@ export const typeDefs = `#graphql
     getAllClients: [Client!]
     getLotesByProject(proyecto: ID!): [Lote!]
     getAllPagosFromLote(lote: ID!, proyecto: ID!, cliente: ID!): [Pago!]
+    watchLoteInfo(lote: String, manzana: String, fraccionamiento: String, proyectoId: ID): [Lote!]
   }
 
   type Mutation {
@@ -141,7 +149,7 @@ export const typeDefs = `#graphql
     createProyecto(proyecto:ProyectoInput): Proyecto
     createClient(client:ClientInput): Client
     createPDF(pago: ID!): String
-    createLote(lote:LoteInput): Lote
+    createLote(lote:LoteInput, newClientUpsert: Boolean!): Lote
   }
   
 `
