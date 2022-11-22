@@ -1,5 +1,5 @@
 import { ApolloError } from 'apollo-server-core'
-import { Proyecto, Clientes, Owner, Lotes } from '../../models/index.js'
+import { Proyecto, Clientes, Owner, Lotes, Pagos } from '../../models/index.js'
 import createPDF from '../../utils/createPDF.js'
 
 export const Mutation = {
@@ -79,6 +79,16 @@ export const Mutation = {
 
       const error = new ApolloError('no se especifico si el cliente es nuevo o no')
       return error
+    } catch (error) {
+      return new ApolloError(error)
+    }
+  },
+  createPago: async (_, { pago }, context, info) => {
+    try {
+      const newPago = new Pagos({ ...pago })
+      const newPagoCreated = await newPago.save()
+      console.log('🚀 ~ file: mutation.js ~ line 90 ~ createPago: ~ newPagoCreated', newPagoCreated)
+      return { ...newPagoCreated._doc, _id: newPagoCreated.id }
     } catch (error) {
       return new ApolloError(error)
     }

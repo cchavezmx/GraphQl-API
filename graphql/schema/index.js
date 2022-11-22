@@ -101,18 +101,18 @@ export const typeDefs = `#graphql
     isActive: Boolean
     status: Boolean
     folio: String!
-    consecutivo: Int
+    consecutivo: String
     refPago: String!
-    deposito: String
+    monto: Float!
     ctaBancaria: String
     banco: String
     tipoPago: String
     fechaPago: String
     refBanco: String
-    clienteData: Client!
-    proyectoData: Proyecto!
-    loteData: Lote!
-    ownerData: Owner!
+    clienteData: Client
+    proyectoData: Proyecto
+    loteData: Lote
+    ownerData: Owner
   }
 
 
@@ -132,6 +132,23 @@ export const typeDefs = `#graphql
     proyectoData: Proyecto
   }
 
+  input PagoInput {
+    isActive: Boolean
+    status: Boolean
+    folio: String
+    consecutivo: String
+    refPago: String!
+    monto: Float!
+    ctaBancaria: String
+    banco: String
+    tipoPago: String
+    fechaPago: String
+    refBanco: String
+    cliente: ID!
+    proyecto: ID!
+    lote: ID!
+    owner: ID    
+  }
   
   
   type Query {
@@ -142,6 +159,7 @@ export const typeDefs = `#graphql
     getLotesByProject(proyecto: ID!): [Lote!]
     getAllPagosFromLote(lote: ID!, proyecto: ID!, cliente: ID!): [Pago!]
     watchLoteInfo(lote: String, manzana: String, fraccionamiento: String, proyectoId: ID): [Lote!]
+    getAllExperimentalFromArray: [String]
   }
 
   type Mutation {
@@ -150,6 +168,8 @@ export const typeDefs = `#graphql
     createClient(client:ClientInput): Client
     createPDF(pago: ID!): String
     createLote(lote:LoteInput, newClientUpsert: Boolean!): Lote
+    createPago(pago: PagoInput): Pago
+    saveExpermientalList(busqueda: String): String
   }
   
 `

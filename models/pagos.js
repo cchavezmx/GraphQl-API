@@ -43,14 +43,13 @@ export const PagosSchema = new Schema({
   },
   // folio interno para control de pagos
   consecutivo: {
-    type: Number,
-    required: true
+    type: String
   },
   refPago: {
     type: String,
     require: false
   },
-  deposito: {
+  monto: {
     type: mongoose.Decimal128,
     require: true
   },
@@ -83,7 +82,13 @@ PagosSchema.pre('save', async function (next) {
     cliente: this.cliente,
     proyecto: this.proyecto,
     lote: this.lote
-  }).countDocuments() + 1
+  }).sort({ createdAt: -1 }).limit(1).then((data) => {
+    if (data.length > 0) {
+      return Number(data[0].folio) + 1
+    } else {
+      return 1
+    }
+  })
 
   const lastUUD = uuid().split('-')
   const lastSerie = lastUUD[4]

@@ -19,8 +19,8 @@ async function startApolloServer () {
   const server = new ApolloServer({
     typeDefs,
     resolvers: {
-      Query: resolvers.Query,
-      Mutation: resolvers.Mutation
+      Query: { ...resolvers.Query, ...resolvers.IntecsaQuery },
+      Mutation: { ...resolvers.Mutation, ...resolvers.IntecsaMutations }
     },
     cache: new KeyvAdapter(new Keyv(process.env.REDIS_URL)),
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],

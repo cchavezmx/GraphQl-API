@@ -140,10 +140,9 @@ export const Query = {
       const pagos = loteFound.map(pago => {
         return {
           ...pago,
-          deposito: pago.deposito ?? pago.mensualidad.toString()
+          monto: parseFloat(pago.monto)
         }
       })
-      console.log('🚀 ~ file: query.js ~ line 83 ~ getAllPagosFromLote: ~ loteFound', pagos)
       return pagos
     } catch (error) {
       return new ApolloError(error)
