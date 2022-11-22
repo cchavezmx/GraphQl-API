@@ -149,6 +149,11 @@ export const typeDefs = `#graphql
     lote: ID!
     owner: ID    
   }
+
+  type Pokemones {
+    name: String
+    url: String    
+  }
   
   
   type Query {
@@ -160,6 +165,7 @@ export const typeDefs = `#graphql
     getAllPagosFromLote(lote: ID!, proyecto: ID!, cliente: ID!): [Pago!]
     watchLoteInfo(lote: String, manzana: String, fraccionamiento: String, proyectoId: ID): [Lote!]
     getAllExperimentalFromArray: [String]
+    testStackClass: Pokemones
   }
 
   type Mutation {
@@ -169,7 +175,7 @@ export const typeDefs = `#graphql
     createPDF(pago: ID!): String
     createLote(lote:LoteInput, newClientUpsert: Boolean!): Lote
     createPago(pago: PagoInput): Pago
-    saveExpermientalList(busqueda: String): String
+    saveExpermientalList(busqueda: String, user: String): String
   }
   
 `

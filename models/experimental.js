@@ -4,7 +4,9 @@ const { Schema } = mongoose
 const experimental = new Schema({
   value: {
     type: String
-
+  },
+  user: {
+    type: String
   }
 }, {
   timestamps: true
