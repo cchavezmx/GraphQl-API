@@ -25,7 +25,13 @@ async function startApolloServer () {
     cache: new KeyvAdapter(new Keyv(process.env.REDIS_URL)),
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     introspection: true,
-    playground: true
+    playground: true,
+    context: ({ req }) => {
+      return {
+        headers: req.headers,
+        body: req.body
+      }
+    }
   })
 
   const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@gti.tcrun.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`

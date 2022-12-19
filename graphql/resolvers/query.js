@@ -143,6 +143,7 @@ export const Query = {
           monto: parseFloat(pago.monto)
         }
       })
+      console.log('🚀 ~ file: query.js ~ line 146 ~ pagos ~ pagos', pagos)
       return pagos
     } catch (error) {
       return new ApolloError(error)

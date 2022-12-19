@@ -92,6 +92,15 @@ export const Mutation = {
     } catch (error) {
       return new ApolloError(error)
     }
+  },
+  pagarPago: async (_, { pago }, context, info) => {
+    try {
+      const doc = await Pagos.findOneAndUpdate({ _id: pago }, { isPaid: true }, { new: true })
+      console.log({ doc })
+      return { ...doc._doc, _id: doc.id }
+    } catch (error) {
+      return new ApolloError(error)
+    }
   }
 
 }

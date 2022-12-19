@@ -113,6 +113,8 @@ export const typeDefs = `#graphql
     proyectoData: Proyecto
     loteData: Lote
     ownerData: Owner
+    description: String
+    isPaid: Boolean
   }
 
 
@@ -147,7 +149,8 @@ export const typeDefs = `#graphql
     cliente: ID!
     proyecto: ID!
     lote: ID!
-    owner: ID    
+    owner: ID
+    description: String
   }
 
   type Pokemones {
@@ -176,6 +179,7 @@ export const typeDefs = `#graphql
     createLote(lote:LoteInput, newClientUpsert: Boolean!): Lote
     createPago(pago: PagoInput): Pago
     saveExpermientalList(busqueda: String, user: String): String
+    pagarPago(pago: ID!): Pago
   }
   
 `

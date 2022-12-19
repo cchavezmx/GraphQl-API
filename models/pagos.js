@@ -73,6 +73,13 @@ export const PagosSchema = new Schema({
   refBanco: {
     type: String,
     require: true
+  },
+  description: {
+    type: String
+  },
+  isPaid: {
+    type: Boolean,
+    default: false
   }
 
 }, { timestamps: true })
