@@ -157,6 +157,11 @@ export const typeDefs = `#graphql
     name: String
     url: String    
   }
+
+  input catalogoInput {
+    url: String
+    name: String
+  }
   
   
   type Query {
@@ -180,6 +185,7 @@ export const typeDefs = `#graphql
     createPago(pago: PagoInput): Pago
     saveExpermientalList(busqueda: String, user: String): String
     pagarPago(pago: ID!): Pago
+    uploadFileCatalogo(catalogo: catalogoInput): String
   }
   
 `

@@ -1,5 +1,5 @@
 import { ApolloError } from 'apollo-server-core'
-import { Proyecto, Clientes, Owner, Lotes, Pagos } from '../../models/index.js'
+import { Proyecto, Clientes, Owner, Lotes, Pagos, CatalogoPdf } from '../../models/index.js'
 import createPDF from '../../utils/createPDF.js'
 
 export const Mutation = {
@@ -98,6 +98,15 @@ export const Mutation = {
       const doc = await Pagos.findOneAndUpdate({ _id: pago }, { isPaid: true }, { new: true })
       console.log({ doc })
       return { ...doc._doc, _id: doc.id }
+    } catch (error) {
+      return new ApolloError(error)
+    }
+  },
+  uploadFileCatalogo: async (_, { catalogo }, context, info) => {
+    try {
+      const { name, url } = catalogo
+      await CatalogoPdf.findOneAndUpdate({ name }, { url }, { upsert: true })
+      return 'upload ok'
     } catch (error) {
       return new ApolloError(error)
     }

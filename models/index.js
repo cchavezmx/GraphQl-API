@@ -4,6 +4,7 @@ import Lotes from './lotes.js'
 import Clientes from './clientes.js'
 import Pagos from './pagos.js'
 import Experimental from './experimental.js'
+import CatalogoPdf from './catalogo.js'
 
 export {
   Proyecto,
@@ -11,5 +12,6 @@ export {
   Lotes,
   Clientes,
   Pagos,
-  Experimental
+  Experimental,
+  CatalogoPdf
 }
