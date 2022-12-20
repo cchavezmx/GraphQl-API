@@ -162,6 +162,12 @@ export const typeDefs = `#graphql
     url: String
     name: String
   }
+
+  type Catalogos {
+    _id: ID!
+    name: String
+    url: String
+  }
   
   
   type Query {
@@ -174,6 +180,7 @@ export const typeDefs = `#graphql
     watchLoteInfo(lote: String, manzana: String, fraccionamiento: String, proyectoId: ID): [Lote!]
     getAllExperimentalFromArray: [String]
     testStackClass: Pokemones
+    getAllCatalogos: [Catalogos]
   }
 
   type Mutation {

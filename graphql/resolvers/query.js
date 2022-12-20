@@ -1,5 +1,5 @@
 import { ApolloError } from 'apollo-server-core'
-import { Owner, Proyecto, Clientes, Lotes, Pagos } from '../../models/index.js'
+import { Owner, Proyecto, Clientes, Lotes, Pagos, CatalogoPdf } from '../../models/index.js'
 import { ObjectId } from 'mongodb'
 import mongoose from 'mongoose'
 
@@ -200,5 +200,18 @@ export const Query = {
         _id: item._id.toString()
       }
     })
+  },
+  getAllCatalogos: async (_, { owner }, context, info) => {
+    try {
+      const allCtalogos = await CatalogoPdf.find()
+      return allCtalogos.map(catalogo => {
+        return {
+          ...catalogo._doc,
+          _id: catalogo.id
+        }
+      })
+    } catch (error) {
+      return new ApolloError(error)
+    }
   }
 }
