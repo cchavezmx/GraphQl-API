@@ -6,6 +6,7 @@ import mongoose from 'mongoose'
 import Keyv from 'keyv'
 import { KeyvAdapter } from '@apollo/utils.keyvadapter'
 import { typeDefs } from './graphql/schema/index.js'
+import { typesDefsTesoreria } from './graphql/schema/tesoreria.js'
 import { resolvers } from './graphql/resolvers/index.js'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 
@@ -17,7 +18,7 @@ async function startApolloServer () {
   const app = express()
   const httpServer = http.createServer(app)
   const server = new ApolloServer({
-    typeDefs,
+    typeDefs: [typeDefs, typesDefsTesoreria],
     resolvers: {
       Query: { ...resolvers.Query, ...resolvers.IntecsaQuery },
       Mutation: { ...resolvers.Mutation, ...resolvers.IntecsaMutations }

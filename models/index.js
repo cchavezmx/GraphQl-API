@@ -5,6 +5,7 @@ import Clientes from './clientes.js'
 import Pagos from './pagos.js'
 import Experimental from './experimental.js'
 import CatalogoPdf from './catalogo.js'
+import Reembolso from './reembolso.js'
 
 export {
   Proyecto,
@@ -13,5 +14,6 @@ export {
   Clientes,
   Pagos,
   Experimental,
-  CatalogoPdf
+  CatalogoPdf,
+  Reembolso
 }
