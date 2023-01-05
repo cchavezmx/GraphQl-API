@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 const ReembolsoSchema = new Schema({
-  statu: {
+  status: {
     enum: ['Pendiente', 'Aprobado', 'Rechazado', 'Cancelado', 'Atencion'],
     type: String,
     default: 'Pendiente'
