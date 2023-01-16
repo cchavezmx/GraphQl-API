@@ -44,7 +44,7 @@ async function startApolloServer () {
   mongoose.connect(uri, options)
     .then(async () => {
       await new Promise((resolve) => httpServer.listen({ port: PORT }, resolve))
-      console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`)
+      console.log(`🚀🚀🚀🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`)
     })
 }
 
