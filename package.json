@@ -37,7 +37,8 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run co99",
-      "pre-push": "npm run co99"
+      "pre-push": "npm run co99",
+      "commit-msg": "npm run co99"
     }
   }
 }
