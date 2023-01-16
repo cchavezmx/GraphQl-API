@@ -18,7 +18,7 @@ export const Query = {
       })
       return ownersFetched
     } catch (error) {
-
+      return new ApolloError(error)
     }
   },
   getOwnersBySlug: async (_, { slug }, context, info) => {
@@ -62,16 +62,21 @@ export const Query = {
   getLotesByProject: async (_, { proyecto }, context, info) => {
     const objectId = mongoose.Types.ObjectId(proyecto)
     try {
-      const client = await Lotes.find({ proyecto: objectId }).populate('cliente')
-      const response = client.reverse().map(lote => {
-        if (!lote.cliente) (console.log('🚀 ~ file: query.js ~ line 59 ~ response ~ lote', lote))
-        return {
-          ...lote._doc,
-          _id: lote.id,
-          clienteData: { name: lote.cliente.name, _id: lote.cliente._id }
-        }
-      })
-      return response
+      const client = await Lotes
+        .find({ proyecto: objectId })
+        .populate('cliente')
+        .then(res => {
+          res.reverse()
+          return res.map(lote => {
+            if (!lote.cliente) (console.log('🚀 ~ file: query.js ~ line 59 ~ response ~ lote', lote))
+            return {
+              ...lote._doc,
+              _id: lote.id,
+              clienteData: { name: lote.cliente.name, _id: lote.cliente._id }
+            }
+          })
+        })
+      return client
     } catch (error) {
       return new ApolloError(error)
     }
@@ -141,14 +146,16 @@ export const Query = {
     ]
 
     try {
-      const loteFound = await Pagos.aggregate(agg).then((res) => {
-        return res.map((pago) => {
-          return {
-            ...pago,
-            monto: parseFloat(pago.monto)
-          }
+      const loteFound = await Pagos
+        .aggregate(agg)
+        .then((res) => {
+          return res.map((pago) => {
+            return {
+              ...pago,
+              monto: parseFloat(pago.monto)
+            }
+          })
         })
-      })
       return loteFound
     } catch (error) {
       return new ApolloError(error)
@@ -197,23 +204,27 @@ export const Query = {
       }
     ]
 
-    const match = await Lotes.aggregate(agg)
-    return match.map(item => {
-      return {
-        ...item,
-        _id: item._id.toString()
-      }
+    const match = await Lotes.aggregate(agg).then(res => {
+      return res.map(item => {
+        return {
+          ...item,
+          _id: item._id.toString()
+        }
+      })
     })
+    return match
   },
   getAllCatalogos: async (_, { owner }, context, info) => {
     try {
-      const allCtalogos = await CatalogoPdf.find()
-      return allCtalogos.map(catalogo => {
-        return {
-          ...catalogo._doc,
-          _id: catalogo.id
-        }
+      const allCtalogos = await CatalogoPdf.find().then(res => {
+        return res.map(catalogo => {
+          return {
+            ...catalogo._doc,
+            _id: catalogo.id
+          }
+        })
       })
+      return allCtalogos
     } catch (error) {
       return new ApolloError(error)
     }
