@@ -16,7 +16,6 @@ export const Mutation = {
       const response = new Reembolso(reembolso)
       const newReembolso = await response.save()
       const ID = newReembolso._id.toString()
-      console.log('🚀 ~ file: mutation.js:19 ~ saveReembolsoPeriodo: ~ ID', ID)
       return ID
     } catch (error) {
       return new ApolloError(error)

@@ -194,7 +194,6 @@ export const Query = {
 
     const match = await Lotes.aggregate(agg)
     return match.map(item => {
-      console.log('🚀 ~ file: query.js ~ line 171 ~ watchLoteInfo: ~ item', item)
       return {
         ...item,
         _id: item._id.toString()
@@ -202,7 +201,6 @@ export const Query = {
     })
   },
   getAllCatalogos: async (_, { owner }, context, info) => {
-    console.log('🚀 ~ file: query.js:205 ~ getAllCatalogos: ~ context', context)
     try {
       const allCtalogos = await CatalogoPdf.find()
       return allCtalogos.map(catalogo => {
