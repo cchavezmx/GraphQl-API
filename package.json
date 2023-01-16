@@ -31,9 +31,6 @@
     "standard": "^17.0.0",
     "uuidv4": "^6.2.13"
   },
-  "devDependencies": {
-    "husky": "^6.0.0"
-  },
   "eslintConfig": {
     "extends": "standard"
   },
@@ -41,5 +38,8 @@
     "hooks": {
       "commit-msg": "npm run co99"
     }
+  },
+  "devDependencies": {
+    "husky": "^8.0.3"
   }
 }
