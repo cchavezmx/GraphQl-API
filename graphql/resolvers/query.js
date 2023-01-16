@@ -68,7 +68,6 @@ export const Query = {
         .then(res => {
           res.reverse()
           return res.map(lote => {
-            if (!lote.cliente) (console.log('🚀 ~ file: query.js ~ line 59 ~ response ~ lote', lote))
             return {
               ...lote._doc,
               _id: lote.id,
