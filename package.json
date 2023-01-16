@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "co99": "co99"
+    "co99": "co99",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -37,7 +38,7 @@
     "extends": "standard"
   },
   "husky": {
-    "hooks": {      
+    "hooks": {
       "commit-msg": "npm run co99"
     }
   }
