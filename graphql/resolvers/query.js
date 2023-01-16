@@ -202,6 +202,7 @@ export const Query = {
     })
   },
   getAllCatalogos: async (_, { owner }, context, info) => {
+    console.log('🚀 ~ file: query.js:205 ~ getAllCatalogos: ~ context', context)
     try {
       const allCtalogos = await CatalogoPdf.find()
       return allCtalogos.map(catalogo => {
