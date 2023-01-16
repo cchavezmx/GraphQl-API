@@ -7,49 +7,54 @@ export const Query = {
 
   owners: async () => {
     try {
-      const ownersFetched = await Owner.find()
-      return ownersFetched.map(owner => {
-        return {
-          ...owner._doc,
-          _id: owner.id,
-          createdAt: new Date(owner._doc.createdAt).toISOString()
-        }
+      const ownersFetched = await Owner.find().then(res => {
+        return res.map(owner => {
+          return {
+            ...owner._doc,
+            _id: owner.id,
+            createdAt: new Date(owner._doc.createdAt).toISOString()
+          }
+        })
       })
+      return ownersFetched
     } catch (error) {
 
     }
   },
   getOwnersBySlug: async (_, { slug }, context, info) => {
     try {
-      const owner = await Owner.findOne({ slug })
-      return { ...owner._doc, _id: owner.id }
+      const owner = await Owner.findOne({ slug }).then(res => {
+        return { ...owner._doc, _id: owner.id }
+      })
+      return owner
     } catch (error) {
       return new ApolloError(error)
     }
   },
   getProyectosByOwner: async (_, { owner }, context, info) => {
     try {
-      const proyectos = await Proyecto.find({ owner }).populate('owner')
-      const respose = proyectos.map(proyecto => {
+      const proyectos = Proyecto.find({ owner }).populate('owner')
+      return await proyectos.map(proyecto => {
         return {
           ...proyecto._doc,
           _id: proyecto.id
         }
       })
-      return respose
     } catch (error) {
       return new ApolloError(error)
     }
   },
   getAllClients: async () => {
     try {
-      const clients = await Clientes.find()
-      return clients.map(client => {
-        return {
-          ...client._doc,
-          _id: client.id
-        }
+      const clients = await Clientes.find().then(res => {
+        return res.map(client => {
+          return {
+            ...client._doc,
+            _id: client.id
+          }
+        })
       })
+      return clients
     } catch (error) {
       return new ApolloError(error)
     }
@@ -136,15 +141,15 @@ export const Query = {
     ]
 
     try {
-      const loteFound = await Pagos.aggregate(agg)
-      const pagos = loteFound.map(pago => {
-        return {
-          ...pago,
-          monto: parseFloat(pago.monto)
-        }
+      const loteFound = await Pagos.aggregate(agg).then((res) => {
+        return res.map((pago) => {
+          return {
+            ...pago,
+            monto: parseFloat(pago.monto)
+          }
+        })
       })
-      console.log('🚀 ~ file: query.js ~ line 146 ~ pagos ~ pagos', pagos)
-      return pagos
+      return loteFound
     } catch (error) {
       return new ApolloError(error)
     }
