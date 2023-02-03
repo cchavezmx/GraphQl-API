@@ -7,9 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev": "nodemon app.js",
-    "co99": "co99",
-    "prepare": "husky install"
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
@@ -33,12 +31,7 @@
   },
   "eslintConfig": {
     "extends": "standard"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "npm run co99"
-    }
-  },
+  },  
   "devDependencies": {
     "husky": "^8.0.3"
   }
