@@ -1,6 +1,6 @@
 import { ApolloError } from 'apollo-server-core'
 import { Proyecto, Clientes, Owner, Lotes, Pagos, CatalogoPdf } from '../../models/index.js'
-import createPDF from '../../utils/createPDF.js'
+import { createPDF } from '../../utils/createPDF.js'
 
 export const Mutation = {
   createClient: async (_, { client }, context, info) => {
@@ -43,11 +43,14 @@ export const Mutation = {
       return new ApolloError(error)
     }
   },
-  createPDF: async args => {
+  createPDF: async (_, { pago, owner }, context, info) => {
+    console.log(pago, 'createPDF')
     try {
-      const res = await createPDF()
+      const res = await createPDF(pago, owner)
+      console.log({ res })
       return res
     } catch (error) {
+      console.log(error)
       return new ApolloError(error)
     }
   },
@@ -94,8 +97,10 @@ export const Mutation = {
     }
   },
   pagarPago: async (_, { pago }, context, info) => {
+    console.log('🚀 ~ file: mutation.js:97 ~ pagarPago: ~ pago', pago)
+    const { _id, ...restOfData } = pago
     try {
-      const doc = await Pagos.findOneAndUpdate({ _id: pago }, { isPaid: true }, { new: true })
+      const doc = await Pagos.findOneAndUpdate({ _id }, { ...restOfData }, { new: true })
       console.log({ doc })
       return { ...doc._doc, _id: doc.id }
     } catch (error) {

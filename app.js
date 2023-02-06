@@ -3,8 +3,6 @@ import express from 'express'
 import * as dotenv from 'dotenv'
 import mongoose from 'mongoose'
 
-import Keyv from 'keyv'
-import { KeyvAdapter } from '@apollo/utils.keyvadapter'
 import { typeDefs } from './graphql/schema/index.js'
 import { typesDefsTesoreria } from './graphql/schema/tesoreria.js'
 import { resolvers } from './graphql/resolvers/index.js'
@@ -23,7 +21,6 @@ async function startApolloServer () {
       Query: { ...resolvers.Query, ...resolvers.IntecsaQuery },
       Mutation: { ...resolvers.Mutation, ...resolvers.IntecsaMutations }
     },
-    cache: new KeyvAdapter(new Keyv(process.env.REDIS_URL)),
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     introspection: true,
     playground: true,

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Factura</title>
+    <style>
+      /* Estilo de la factura */
+      .invoice {
+        font-family: Arial, sans-serif;
+        width: 100%;
+        text-align: center;
+      }
+      .invoice-header {
+        background-color: lightgray;
+        padding: 10px;
+      }
+      .invoice-info {
+        padding: 20px;
+      }
+      .invoice-details {
+        border: 1px solid gray;
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+      }
+      .invoice-details th, .invoice-details td {
+        border: 1px solid gray;
+        padding: 10px;
+      }
+      .total {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="invoice">
+      <div class="invoice-header">
+        <h1>Factura</h1>
+      </div>
+      <div class="invoice-info">
+        <p>Fecha: [FECHA DE LA FACTURA]</p>
+        <p>Número de factura: [NÚMERO DE FACTURA]</p>
+        <p>Nombre del cliente: [NOMBRE DEL CLIENTE]</p>
+      </div>
+      <table class="invoice-details">
+        <tr>
+          <th>Descripción</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Total</th>
+        </tr>
+        <tr>
+          <td>[DESCRIPCIÓN DEL ARTÍCULO 1]</td>
+          <td>[CANTIDAD DEL ARTÍCULO 1]</td>
+          <td>[PRECIO DEL ARTÍCULO 1]</td>
+          <td>[TOTAL DEL ARTÍCULO 1]</td>
+        </tr>
+        <tr>
+          <td>[DESCRIPCIÓN DEL ARTÍCULO 2]</td>
+          <td>[CANTIDAD DEL ARTÍCULO 2]</td>
+          <td>[PRECIO DEL ARTÍCULO 2]</td>
+          <td>[TOTAL DEL ARTÍCULO 2]</td>
+        </tr>
+        <!-- Agregue tantas filas como sea necesario -->
+        <tr class="total">
+          <td colspan="3">Total</td>
+          <td>[TOTAL DE LA FACTURA]</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
