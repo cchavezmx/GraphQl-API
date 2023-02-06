@@ -33,8 +33,8 @@ export const Query = {
   },
   getProyectosByOwner: async (_, { owner }, context, info) => {
     try {
-      const proyectos = Proyecto.find({ owner }).populate('owner')
-      return await proyectos.map(proyecto => {
+      const proyectos = await Proyecto.find({ owner }).populate('owner')
+      return proyectos.map(proyecto => {
         return {
           ...proyecto._doc,
           _id: proyecto.id

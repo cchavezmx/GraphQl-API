@@ -21,6 +21,26 @@ export const typeDefs = `#graphql
     slug: String!
     rfc: String!
     razonSocial: String!
+    direccion: String
+    ciudad: String
+    estado: String
+    cp: String
+    telefono: String
+    email: String
+  }
+
+  input OwnerInput {
+    isActive: Boolean
+    name: String!
+    slug: String!
+    rfc: String!
+    razonSocial: String!
+    direccion: String
+    ciudad: String
+    estado: String
+    cp: String
+    telefono: String
+    email: String
   }
 
   type Proyecto {
@@ -169,6 +189,13 @@ export const typeDefs = `#graphql
     url: String
   }
   
+  input souldInput {
+    _id: ID!
+    isPaid: Boolean
+    refPago: String
+    refBanco: String
+    fechaPago: String
+  }
   
   type Query {
     owners: [Owner!]
@@ -187,11 +214,11 @@ export const typeDefs = `#graphql
     createOwner(owner:OwnerInput): Owner
     createProyecto(proyecto:ProyectoInput): Proyecto
     createClient(client:ClientInput): Client
-    createPDF(pago: ID!): String
+    createPDF(pago: ID!, owner: OwnerInput): String
     createLote(lote:LoteInput, newClientUpsert: Boolean!): Lote
     createPago(pago: PagoInput): Pago
     saveExpermientalList(busqueda: String, user: String): String
-    pagarPago(pago: ID!): Pago
+    pagarPago(pago: souldInput): Pago
     uploadFileCatalogo(catalogo: catalogoInput): String
   }
   
