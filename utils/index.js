@@ -186,7 +186,6 @@ const dateIntlRef = ({ date, locale = 'es-MX', type = 'all' }) => {
   }
 
   const dateIntl = new Date(date)
-  console.log('🚀 ~ file: index.js:189 ~ dateIntlRef ~ dateIntl', dateIntl)
   return new Intl.DateTimeFormat(locale, { ...dataInteOptions(), timeZone: 'UTC' }).format(dateIntl)
 }
 
