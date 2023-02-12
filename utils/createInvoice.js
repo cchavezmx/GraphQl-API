@@ -1,7 +1,6 @@
 import { dateIntlRef, numerosaLetras, monyFormat } from './index.js'
 
 export const createInvoice = async (dataPago, owner) => {
-  console.log('🚀 ~ file: createInvoice.js:4 ~ createInvoice ~ dataPago', dataPago)
   const {
     consecutivo,
     monto,
@@ -20,8 +19,7 @@ export const createInvoice = async (dataPago, owner) => {
     createdAt
   } = dataPago
 
-  const { direccion = '', ciudad = '', slug, rfc, razonSocial } = owner
-
+  const { direccion, ciudad, slug, rfc, razonSocial } = owner
   const letrasToTexto = numerosaLetras(Number(monto))
   // const lafecha = dateIntlRef({ date: fechaPago })
   /**
@@ -46,7 +44,6 @@ export const createInvoice = async (dataPago, owner) => {
     referencia ${refBanco} en
     ${dateIntlRef({ date: fechaPago })}
   `
-  console.log('🚀 ~ file: createInvoice.js:35 ~ createInvoice ~ textoDescription', textoDescription)
 
   const firmaXavier = `
   <img 
@@ -361,13 +358,16 @@ export const createInvoice = async (dataPago, owner) => {
         <p>Fecha:</p>
         <p>${dateIntlRef({ date: createdAt })}</p>
       </span>
-      <span>
-        <p>Factura:</p>
-        <p>${consecutivo}</p>
-      <span>
-        <p>Folio:</p>
-        <p>${folio}</p>
-      </span>
+      <div>
+        <span style="padding: 0">
+          <p>Factura:</p>
+          <p>${consecutivo}</p>
+        </span>
+        <span style="padding: 0">
+          <p>Folio:</p>
+          <p>${folio}</p>
+        </span>
+      </div>      
     </div>
   </section>
   <section class="datos__invoice">
@@ -394,6 +394,9 @@ export const createInvoice = async (dataPago, owner) => {
   
   </section>
   <div>
+    <p style="font-weight: bold">
+      Observaciones:
+    </p>
     <p>
       ${hmtltextoObservaciones}
     </p>  
@@ -416,7 +419,7 @@ export const createInvoice = async (dataPago, owner) => {
         </div>
   
         <div class="firma_cliente">        
-          ${htmlOwnersFirma[`${slug}`]}
+          ${htmlOwnersFirma[slug]}
         </div>
       </div>  
       <div class="comentarios">

@@ -21,7 +21,14 @@ export const OwnerSchema = new Schema({
   razonSocial: {
     type: String,
     required: true
+  },
+  direccion: {
+    type: String
+  },
+  ciudad: {
+    type: String
   }
+
 }, { timestamps: true })
 
 const Owner = mongoose.model('Owner', OwnerSchema)

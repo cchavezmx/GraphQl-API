@@ -214,7 +214,7 @@ export const typeDefs = `#graphql
     createOwner(owner:OwnerInput): Owner
     createProyecto(proyecto:ProyectoInput): Proyecto
     createClient(client:ClientInput): Client
-    createPDF(pago: ID!, owner: OwnerInput): String
+    createPDF(pago: ID!, owner: ID!): String
     createLote(lote:LoteInput, newClientUpsert: Boolean!): Lote
     createPago(pago: PagoInput): Pago
     saveExpermientalList(busqueda: String, user: String): String
