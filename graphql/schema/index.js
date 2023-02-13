@@ -155,6 +155,7 @@ export const typeDefs = `#graphql
   }
 
   input PagoInput {
+    _id: ID!
     isActive: Boolean
     status: Boolean
     folio: String
@@ -166,9 +167,9 @@ export const typeDefs = `#graphql
     tipoPago: String
     fechaPago: String
     refBanco: String
-    cliente: ID!
-    proyecto: ID!
-    lote: ID!
+    cliente: ID
+    proyecto: ID
+    lote: ID
     owner: ID
     description: String
   }
@@ -220,6 +221,7 @@ export const typeDefs = `#graphql
     saveExpermientalList(busqueda: String, user: String): String
     pagarPago(pago: souldInput): Pago
     uploadFileCatalogo(catalogo: catalogoInput): String
+    patchPago(pago: PagoInput): String
   }
   
 `

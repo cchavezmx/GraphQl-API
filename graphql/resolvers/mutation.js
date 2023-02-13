@@ -109,6 +109,17 @@ export const Mutation = {
     } catch (error) {
       return new ApolloError(error)
     }
+  },
+  patchPago: async (_, { pago }, context, info) => {
+    try {
+      const { _id, ...restOfData } = pago
+      const doc = await Pagos.findOneAndUpdate({ _id }, { ...restOfData })
+      if (doc !== null) {
+        return 'pathch ok'
+      }
+    } catch (error) {
+      return new ApolloError(error)
+    }
   }
 
 }
