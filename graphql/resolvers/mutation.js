@@ -115,7 +115,7 @@ export const Mutation = {
       const { _id, ...restOfData } = pago
       const doc = await Pagos.findOneAndUpdate({ _id }, { ...restOfData })
       if (doc !== null) {
-        return 'pathch ok'
+        return JSON.stringify({ message: 'ok', status: 200 })
       }
     } catch (error) {
       return new ApolloError(error)
