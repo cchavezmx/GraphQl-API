@@ -84,10 +84,11 @@ export const Mutation = {
     }
   },
   createPago: async (_, { pago }, context, info) => {
+    console.log('🚀 ~ file: mutation.js:87 ~ createPago: ~ pago:', pago)
     try {
       const newPago = new Pagos({ ...pago })
       const newPagoCreated = await newPago.save()
-      return { ...newPagoCreated._doc, _id: newPagoCreated.id }
+      return { ...newPagoCreated._doc, _id: newPagoCreated._id }
     } catch (error) {
       return new ApolloError(error)
     }
