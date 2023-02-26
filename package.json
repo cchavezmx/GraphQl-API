@@ -25,13 +25,13 @@
     "keyv": "^4.5.0",
     "mongoose": "^6.6.7",
     "nodemon": "^2.0.20",
-    "playwright": "^1.27.1",
+    "playwright": "^1.30.0",
     "standard": "^17.0.0",
     "uuidv4": "^6.2.13"
   },
   "eslintConfig": {
     "extends": "standard"
-  },  
+  },
   "devDependencies": {
     "husky": "^8.0.3"
   }

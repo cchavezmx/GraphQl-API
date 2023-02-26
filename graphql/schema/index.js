@@ -155,7 +155,7 @@ export const typeDefs = `#graphql
   }
 
   input PagoInput {
-    _id: ID!
+    _id: ID
     isActive: Boolean
     status: Boolean
     folio: String

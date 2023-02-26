@@ -6,11 +6,13 @@ import { createInvoice } from './createInvoice.js'
 
 export const createPDF = async (idpago, owner) => {
   const ownerData = await Owner.findById(owner)
+  console.log('🚀 ~ file: createPDF.js:9 ~ createPDF ~ ownerData:', ownerData)
   const pago = await Pagos
     .findById(idpago)
     .populate('lote')
     .populate('proyecto')
     .populate('cliente')
+  console.log('🚀 ~ file: createPDF.js:15 ~ createPDF ~ pago:', pago)
 
   const html = await createInvoice(pago, ownerData)
   // writeFile('invoice.html', html)
@@ -31,6 +33,8 @@ export const createPDF = async (idpago, owner) => {
         bottom: 0
       }
     })
+
+    console.log('PDF created', pdf)
 
     await browser.close()
     // convert pdf to base64
