@@ -97,6 +97,15 @@ export const createInvoice = async (dataPago, owner) => {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <style>
+
+      *{
+        margin: 0;
+      }
+
+      *::before, *::after{
+        padding: 0;
+        box-sizing: border-box;
+      }
       
       body{
         display: flex;
@@ -354,7 +363,7 @@ export const createInvoice = async (dataPago, owner) => {
       <p>${cliente.name}</p>
     </span>
     <div>
-      <span>
+      <span style="padding: 0">
         <p>Fecha:</p>
         <p>${dateIntlRef({ date: createdAt })}</p>
       </span>
